@@ -43,8 +43,11 @@ function plot(dataSet) {
 					.attr("width", nodeWidth)
 					.attr("height", nodeHeight)
 					.style("fill", "red")
+					.attr("country", function(d) {
+						return d.country;
+					})
+					.attr("class", "countryNode")
 					.call(force.drag);
-
 
 	force.on("tick", function() {
 		edges.attr("x1", function(d) {return d.source.x + nodeWidth/2;})
@@ -54,4 +57,17 @@ function plot(dataSet) {
 		nodes.attr("x", function(d) {return d.x;})
 			.attr("y", function(d) {return d.y;});
 	})
+
+	$(".countryNode").hover(function(e) {
+			/* Mouse position is detected and stored. */
+			var xPosition = e.pageX 
+			var yPosition = e.pageY
+			$(".tooltip").css({"left": xPosition + 20, "top": yPosition})
+			$(".tooltip").html($(this).attr("country"));
+			$(".tooltip").fadeIn();
+		}
+		, function() {
+			$(".tooltip").hide();
+		})
 }
+/* CAN ADD A WINDOW WITH: COUNTRY NAME, FLAG, NO.OF NEIGHBOURS, wiki entry */
