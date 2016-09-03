@@ -2,27 +2,30 @@
 body {
   font-family: 'Ubuntu', sans-serif;
   text-align: center;
+  background-image: url("images/wall2.jpg");
+  background-attachment: fixed;
+  background-size: cover;
 }
 
-/* line 6, ../sass/screen.scss */
+/* line 9, ../sass/screen.scss */
 .title {
-  color: gray;
+  color: white;
   margin: 0;
 }
 
-/* line 11, ../sass/screen.scss */
+/* line 14, ../sass/screen.scss */
 .note {
-  color: gray;
+  color: white;
   font-size: 0.8em;
 }
 
-/* line 16, ../sass/screen.scss */
+/* line 19, ../sass/screen.scss */
 .footer {
   text-align: left;
-  color: gray;
+  color: white;
   font-size: 0.8em;
 }
-/* line 20, ../sass/screen.scss */
+/* line 23, ../sass/screen.scss */
 .footer a {
-  color: gray;
+  color: white;
 }

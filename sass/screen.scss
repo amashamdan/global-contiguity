@@ -1,23 +1,26 @@
 body {
 	font-family: 'Ubuntu', sans-serif;
 	text-align: center;
+	background-image: url("images/wall2.jpg");
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .title {
-	color: gray;
+	color: white;
 	margin: 0;
 }
 
 .note {
-	color: gray;
+	color: white;
 	font-size: 0.8em;
 }
 
 .footer {
 	text-align: left;
-	color: gray;
+	color: white;
 	font-size: 0.8em;
 	a {
-		color: gray;
+		color: white;
 	}
 }
