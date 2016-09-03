@@ -29,3 +29,19 @@ body {
 .footer a {
   color: white;
 }
+
+/* line 28, ../sass/screen.scss */
+.tooltip {
+  display: none;
+  background-color: white;
+  position: absolute;
+  font-size: 0.8em;
+  padding: 2px 3px 2px 3px;
+  border: none;
+  border-radius: 3px;
+}
+
+/* line 38, ../sass/screen.scss */
+.countryNode {
+  cursor: pointer;
+}
