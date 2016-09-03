@@ -25,6 +25,19 @@ body {
 	}
 }
 
+.information {
+	display: none;
+	position: absolute;
+	background-color: white;
+	border-radius: 5px;
+	opacity: 0.75;
+	font-size: 0.9em;
+	width: 140px;
+	p {
+		margin: 3px;
+	}
+}
+
 .tooltip {
 	display: none;
 	background-color: white;
