@@ -15,6 +15,16 @@ function plot(dataSet) {
 	var nodeWidth = 13;
 	var nodeHeight = 8;
 
+	for (country in dataSet.nodes) {
+		var counter = 0;
+		for (var link in dataSet.links) {
+			if (dataSet.links[link].source == country || dataSet.links[link].target == country) {
+				counter++;
+			}
+		}
+		dataSet.nodes[country].neighbours = counter;
+	}
+
 	var svg = d3.select("#chart-area")
 				.append("svg")
 				.attr("width", chartWidth)
@@ -64,10 +74,15 @@ function plot(dataSet) {
 			var yPosition = e.pageY
 			$(".tooltip").css({"left": xPosition + 20, "top": yPosition})
 			$(".tooltip").html($(this).attr("country"));
+			$(".information").css({"left":$("svg").offset().left, "top": $("svg").offset().top})
+			$(".information").html("<p/>"+$(this).attr("country") + 
+									"<p/>Borders with "+ 2 +" countries</p>");
+			$(".information").fadeIn();
 			$(".tooltip").fadeIn();
 		}
 		, function() {
+			$(".information").hide();
 			$(".tooltip").hide();
 		})
 }
-/* CAN ADD A WINDOW WITH: COUNTRY NAME, FLAG, NO.OF NEIGHBOURS, wiki entry */
+/* CAN ADD A WINDOW WITH: COUNTRY NAME, FLAG, NO.OF NEIGHBOURS */
