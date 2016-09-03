@@ -1,4 +1,28 @@
 /* line 1, ../sass/screen.scss */
 body {
   font-family: 'Ubuntu', sans-serif;
+  text-align: center;
+}
+
+/* line 6, ../sass/screen.scss */
+.title {
+  color: gray;
+  margin: 0;
+}
+
+/* line 11, ../sass/screen.scss */
+.note {
+  color: gray;
+  font-size: 0.8em;
+}
+
+/* line 16, ../sass/screen.scss */
+.footer {
+  text-align: left;
+  color: gray;
+  font-size: 0.8em;
+}
+/* line 20, ../sass/screen.scss */
+.footer a {
+  color: gray;
 }
