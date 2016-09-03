@@ -12,6 +12,9 @@ $.ajax({
 function plot(dataSet) {
 	var chartWidth = 900;
 	var chartHeight = 700;
+	var nodeWidth = 13;
+	var nodeHeight = 8;
+
 	var svg = d3.select("#chart-area")
 				.append("svg")
 				.attr("width", chartWidth)
@@ -30,23 +33,25 @@ function plot(dataSet) {
 					.data(dataSet.links)
 					.enter()
 					.append("line")
-					.style("stroke", "green")
+					.style("stroke", "white")
 					.style("stroke-width", 1);
 
-	var nodes = svg.selectAll("circle")
+	var nodes = svg.selectAll("rect")
 					.data(dataSet.nodes)
 					.enter()
-					.append("circle")
-					.attr("r", 5)
+					.append("rect")
+					.attr("width", nodeWidth)
+					.attr("height", nodeHeight)
 					.style("fill", "red")
 					.call(force.drag);
 
+
 	force.on("tick", function() {
-		edges.attr("x1", function(d) {return d.source.x;})
-			.attr("y1", function(d) {return d.source.y;})
-			.attr("x2", function(d) {return d.target.x;})
-			.attr("y2", function(d) {return d.target.y;});
-		nodes.attr("cx", function(d) {return d.x;})
-			.attr("cy", function(d) {return d.y;});
+		edges.attr("x1", function(d) {return d.source.x + nodeWidth/2;})
+			.attr("y1", function(d) {return d.source.y + nodeHeight/2;})
+			.attr("x2", function(d) {return d.target.x + nodeWidth/2;})
+			.attr("y2", function(d) {return d.target.y + nodeHeight/2;});
+		nodes.attr("x", function(d) {return d.x;})
+			.attr("y", function(d) {return d.y;});
 	})
 }
