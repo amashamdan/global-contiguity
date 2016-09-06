@@ -56,6 +56,9 @@ function plot(dataSet) {
 					.attr("country", function(d) {
 						return d.country;
 					})
+					.attr("neighbours", function(d) {
+						return d.neighbours;
+					})
 					.attr("class", "countryNode")
 					.call(force.drag);
 
@@ -76,7 +79,7 @@ function plot(dataSet) {
 			$(".tooltip").html($(this).attr("country"));
 			$(".information").css({"left":$("svg").offset().left, "top": $("svg").offset().top})
 			$(".information").html("<p/>"+$(this).attr("country") + 
-									"<p/>Borders with "+ 2 +" countries</p>");
+									"<p/>Borders with "+ $(this).attr("neighbours") +" countries</p>");
 			$(".information").fadeIn();
 			$(".tooltip").fadeIn();
 		}
@@ -86,3 +89,4 @@ function plot(dataSet) {
 		})
 }
 /* CAN ADD A WINDOW WITH: COUNTRY NAME, FLAG, NO.OF NEIGHBOURS */
+/* MAKE COuNTRIES IN DIFFERNT SIZES */
