@@ -12,8 +12,8 @@ $.ajax({
 function plot(dataSet) {
 	var chartWidth = 900;
 	var chartHeight = 700;
-	var nodeWidth = 13;
-	var nodeHeight = 8;
+	var nodeWidth = 30;
+	var nodeHeight = 20;
 
 	for (country in dataSet.nodes) {
 		var counter = 0;
@@ -46,13 +46,16 @@ function plot(dataSet) {
 					.style("stroke", "white")
 					.style("stroke-width", 1);
 
-	var nodes = svg.selectAll("rect")
+	/* USING SVG IMAGES AS BACKGROUND FOR NODES IS MAKING THE CODE RUN REALLY SLOW. */
+	var nodes = svg.selectAll("image")
 					.data(dataSet.nodes)
 					.enter()
-					.append("rect")
+					.append("image")
+					.attr("xlink:href", function(d) {
+						return "flags/"+d.code+".png"
+					})
 					.attr("width", nodeWidth)
 					.attr("height", nodeHeight)
-					.style("fill", "red")
 					.attr("country", function(d) {
 						return d.country;
 					})
@@ -60,7 +63,7 @@ function plot(dataSet) {
 						return d.neighbours;
 					})
 					.attr("class", "countryNode")
-					.call(force.drag);
+					.call(force.drag)
 
 	force.on("tick", function() {
 		edges.attr("x1", function(d) {return d.source.x + nodeWidth/2;})
