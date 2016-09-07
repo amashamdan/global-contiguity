@@ -11,9 +11,9 @@ $.ajax({
 var timer;
 function plot(dataSet) {
 	var chartWidth = 900;
-	var chartHeight = 800;
-	var nodeWidth = 30;
-	var nodeHeight = 20;
+	var chartHeight = 900;
+	var nodeWidth = 27;
+	var nodeHeight = 17;
 
 	for (country in dataSet.nodes) {
 		var counter = 0;
@@ -25,6 +25,12 @@ function plot(dataSet) {
 		dataSet.nodes[country].neighbours = counter;
 	}
 
+	var nodeScale = d3.scale.linear()
+						.domain([1, d3.max(dataSet.nodes, function(d) {
+							return d.neighbours;
+						})])
+						.range([1, 2]);
+
 	var svg = d3.select("#chart-area")
 				.append("svg")
 				.attr("width", chartWidth)
@@ -35,7 +41,7 @@ function plot(dataSet) {
 					.nodes(dataSet.nodes)
 					.links(dataSet.links)
 					.size([chartWidth, chartHeight])
-					.linkDistance([50])
+					.linkDistance([75])
 					.charge([-100])
 					.start();
 
@@ -54,8 +60,12 @@ function plot(dataSet) {
 					.attr("xlink:href", function(d) {
 						return "flags/"+d.code+".png"
 					})
-					.attr("width", nodeWidth)
-					.attr("height", nodeHeight)
+					.attr("width", function(d) {
+						return nodeWidth * nodeScale(d.neighbours)
+					})
+					.attr("height", function(d) {
+						return nodeHeight * nodeScale(d.neighbours)
+					})
 					.attr("country", function(d) {
 						return d.country;
 					})
@@ -69,12 +79,21 @@ function plot(dataSet) {
 					.call(force.drag)
 
 	force.on("tick", function() {
+
+
+		/*edges.attr("x1", function(d) {return d.source.x + d.source.width/2;})
+			.attr("y1", function(d) {return d.source.y + d.source.height/2;})
+			.attr("x2", function(d) {return d.target.x + d.target.width/2;})
+			.attr("y2", function(d) {return d.target.y + d.target.height/2;});
+		nodes.attr("x", function(d) {return d.x;})
+			.attr("y", function(d) {return d.y;});*/
+			
 		edges.attr("x1", function(d) {return d.source.x + nodeWidth/2;})
 			.attr("y1", function(d) {return d.source.y + nodeHeight/2;})
 			.attr("x2", function(d) {return d.target.x + nodeWidth/2;})
 			.attr("y2", function(d) {return d.target.y + nodeHeight/2;});
-		nodes.attr("x", function(d) {return d.x;})
-			.attr("y", function(d) {return d.y;});
+		nodes.attr("x", function(d) {return d.x - d.neighbours;})
+			.attr("y", function(d) {return d.y - d.neighbours/2;});
 	})
 
 
