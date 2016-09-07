@@ -8,10 +8,10 @@ $.ajax({
 		alert("Error retreiving data, please try again later.");
 	}
 });
-
+var timer;
 function plot(dataSet) {
 	var chartWidth = 900;
-	var chartHeight = 700;
+	var chartHeight = 800;
 	var nodeWidth = 30;
 	var nodeHeight = 20;
 
@@ -29,14 +29,14 @@ function plot(dataSet) {
 				.append("svg")
 				.attr("width", chartWidth)
 				.attr("height", chartHeight)
-				.style("background-color", "rgba(0, 0, 0, 0.2)");
+				.style("background-color", "rgba(0, 0, 0, 0.5)");
 
 	var force = d3.layout.force()
 					.nodes(dataSet.nodes)
 					.links(dataSet.links)
 					.size([chartWidth, chartHeight])
-					.linkDistance([25])
-					.charge([-75])
+					.linkDistance([50])
+					.charge([-100])
 					.start();
 
 	var edges = svg.selectAll("line")
@@ -62,6 +62,9 @@ function plot(dataSet) {
 					.attr("neighbours", function(d) {
 						return d.neighbours;
 					})
+					.attr("code", function(d) {
+						return d.code;
+					})
 					.attr("class", "countryNode")
 					.call(force.drag)
 
@@ -74,22 +77,28 @@ function plot(dataSet) {
 			.attr("y", function(d) {return d.y;});
 	})
 
+
+
 	$(".countryNode").hover(function(e) {
 			/* Mouse position is detected and stored. */
+			clearInterval(timer);
 			var xPosition = e.pageX 
 			var yPosition = e.pageY
 			$(".tooltip").css({"left": xPosition + 20, "top": yPosition})
 			$(".tooltip").html($(this).attr("country"));
 			$(".information").css({"left":$("svg").offset().left, "top": $("svg").offset().top})
 			$(".information").html("<p/>"+$(this).attr("country") + 
+									"<p><img src='flags/"+
+									$(this).attr("code")+".png'></p>" +
 									"<p/>Borders with "+ $(this).attr("neighbours") +" countries</p>");
-			$(".information").fadeIn();
-			$(".tooltip").fadeIn();
+			$(".information").show();
+			$(".tooltip").show();
 		}
 		, function() {
-			$(".information").hide();
+			timer = setTimeout(function() {
+				$(".information").fadeOut(200);
+			}, 2000)
+			
 			$(".tooltip").hide();
 		})
 }
-/* CAN ADD A WINDOW WITH: COUNTRY NAME, FLAG, NO.OF NEIGHBOURS */
-/* MAKE COuNTRIES IN DIFFERNT SIZES */
